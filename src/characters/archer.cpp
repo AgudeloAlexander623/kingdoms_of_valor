@@ -22,7 +22,7 @@ void Archer::basicAttack(Character& target){
     int damage = calculateDamage();
 
     cout << endl;
-    cout << name
+    cout << getName()
         << " shoots an arrow at "
         << target.getName()
         << "."
@@ -31,9 +31,9 @@ void Archer::basicAttack(Character& target){
     target.receiveDamage(damage);
 
     cout << target.getName()
-        << "receives"
+        << " receives "
         << damage
-        << "damage."
+        << " damage."
         << endl;    
 }
 
@@ -43,7 +43,7 @@ void Archer::specialAbility(Character& target){
 
     if (! spendMana(manaCost)){
         cout << endl;
-        cout << name
+        cout << getName()
             << " does not have enough mana to use power Shot."
             << endl;
         return;
@@ -51,7 +51,7 @@ void Archer::specialAbility(Character& target){
     int damage = calculateDamage() * 2;
 
     cout << endl;
-    cout << name
+    cout << getName()
         << " uses Power Shot "
         << endl;
 
@@ -65,19 +65,31 @@ void Archer::specialAbility(Character& target){
 
 // calcular daño
 int Archer::calculateDamage() const{
-    return attack + (level * 2);
+    return getAttack() + (getLevel() * 2);
+}
+
+// ganar experiencia
+void Archer::gainExperience(int amount){
+    experience += amount;
+
+    // verificar si el arquero sube de nivel
+    // umbral de experiencia: nivel actual * 100
+    while (experience >= getLevel() * 100){
+        experience -= getLevel() * 100;
+        levelUp();
+    }
 }
 
 // subida de nivel
 void Archer::levelUp(){
-    Characters::levelUp();
+    Character::levelUp();
 
     maxHealth += 10;
     maxMana += 8;
 
     attack += 3;
     defence += 2;
-    speed += 2;\
+    speed += 2;
 
     health = maxHealth;
     mana = maxMana;
@@ -90,14 +102,14 @@ void Archer::levelUp(){
 void Archer::showStatus() const{
 
     cout << endl;
-    cout << "Name: " << name << endl;
-    cout << "Class: " << CharacterClass << endl;
-    cout << "Level: " << level << endl;
-    cout << "Experience: " << experience << endl;
-    cout << "Health: " << health << "/" << maxHealth << endl;
-    cout << "Mana: " << mana << "/" << maxMana << endl;
-    cout << "Attack: " << attack << endl;
-    cout << "Defense: " << defence << endl;
-    cout << "Speed: " << speed << endl;
+    cout << "Name: " << getName() << endl;
+    cout << "Class: " << getCharacterClass() << endl;
+    cout << "Level: " << getLevel() << endl;
+    cout << "Experience: " << getExperience() << endl;
+    cout << "Health: " << getHealth() << "/" << getMaxHealth() << endl;
+    cout << "Mana: " << getMana() << "/" << getMaxMana() << endl;
+    cout << "Attack: " << getAttack() << endl;
+    cout << "Defense: " << getDefence() << endl;
+    cout << "Speed: " << getSpeed() << endl;
 
 }

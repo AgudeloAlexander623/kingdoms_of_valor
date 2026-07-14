@@ -1,29 +1,27 @@
-#ifdef ARCHER_H
+#ifndef ARCHER_H
 #define ARCHER_H
 
 #include "character.h"
 
-using namespace std;
-
 class Archer : public Character {
     public:
         // constructor
-        Archer(const string& name); 
+        Archer(const std::string& name); 
 
         // destructor
         ~Archer() override = default;
 
         // combate
-        void basicAttack(character& target) override;
-        void specialAbility(character& target) override;
+        void basicAttack(Character& target) override;
+        void specialAbility(Character& target) override;
         int calculateDamage() const override;
 
         // progresion
-        void gainExperience(int amount) override;
+        void gainExperience(int amount);
         void levelUp() override;
 
         // informacion
-        void showSatatus() const override;
+        void showStatus() const override;
 };
 
 #endif
